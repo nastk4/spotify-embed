@@ -5,11 +5,14 @@
   <title>Playlist</title>
   <link rel="preload" as="image" href="foto1.jpg">
   <style>
+    #zaslona {
+      position: absolute; inset: 0; background: #fde3ee;
+      transition: opacity 0.6s; pointer-events: none;
+    }
     #okladka {
-      position: absolute; left: 24px; top: 24px;
-      width: 152px; height: 152px; border-radius: 8px;
-      overflow: hidden; pointer-events: none;
-      background: #f7cfe0;
+      position: absolute; left: 20px; top: 20px;
+      width: 160px; height: 160px; border-radius: 8px;
+      overflow: hidden; pointer-events: none; background: #f7cfe0;
     }
     #okladka img {
       position: absolute; inset: 0;
@@ -21,11 +24,12 @@
 <body style="margin:0; background:transparent;">
   <div style="background:#f7cfe0; padding:10px; border-radius:20px;">
     <div style="position:relative; border-radius:12px; overflow:hidden; isolation:isolate;">
-      <iframe style="display:block; border:0; filter: invert(1) hue-rotate(180deg);"
+      <iframe id="player" style="display:block; border:0; filter: invert(1) hue-rotate(180deg);"
         src="https://open.spotify.com/embed/playlist/162O07ZgoZ6xhfEstXVO4H?utm_source=generator&theme=0"
         width="100%" height="352" frameborder="0" allowfullscreen=""
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       <div style="position:absolute; inset:0; background:#fde3ee; mix-blend-mode:multiply; pointer-events:none;"></div>
+      <div id="zaslona"></div>
       <div id="okladka">
         <img id="a" src="foto1.jpg" alt="" fetchpriority="high">
         <img id="b" alt="">
@@ -34,28 +38,4 @@
   </div>
 
   <script>
-    var zdjecia = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
-    var czas = 8000; // zmiana co 8 sekund
-    var i = 0;
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-
-    zdjecia.forEach(function (z) { new Image().src = z; });
-
-    if (zdjecia.length > 1) {
-      setInterval(function () {
-        var next = (i + 1) % zdjecia.length;
-        b.src = zdjecia[next];
-        b.style.opacity = 1;
-        setTimeout(function () {
-          a.src = zdjecia[next];
-          b.style.transition = "none";
-          b.style.opacity = 0;
-          setTimeout(function () { b.style.transition = "opacity 1s"; }, 50);
-          i = next;
-        }, 1000);
-      }, czas);
-    }
-  </script>
-</body>
-</html>
+    var zdjecia = ["foto1.jpg", "foto2.jpg",
