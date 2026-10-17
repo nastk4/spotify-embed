@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Playlist</title>
-  <link rel="preload" as="image" href="plyta.png">
+  <link rel="preload" as="image" href="label.png">
   <style>
     html, body { margin: 0; overflow: hidden; background: transparent; }
 
@@ -28,19 +28,11 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       border-radius: 50%; object-fit: cover;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
       animation: obrot 5s linear infinite;
       animation-play-state: paused;
     }
     #plyta.gra { animation-play-state: running; }
-
-    /* dziurka w środku płyty */
-    #dziura {
-      position: absolute; left: 50%; top: 50%;
-      width: 24px; height: 24px; margin: -12px 0 0 -12px;
-      border-radius: 50%; background: #dfc8d3;
-      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.25);
-    }
 
     @keyframes obrot { to { transform: rotate(360deg); } }
   </style>
@@ -51,8 +43,7 @@
       <div id="embed"></div>
       <div style="position:absolute; inset:0; background:#fde3ee; mix-blend-mode:multiply; pointer-events:none;"></div>
       <div id="okladka">
-        <img id="plyta" src="plyta.png" alt="">
-        <div id="dziura"></div>
+        <img id="plyta" src="label.png" alt="">
       </div>
     </div>
   </div>
