@@ -3,6 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Playlist</title>
+  <style>
+    #okladka {
+      position: absolute; left: 30px; top: 30px;
+      width: 190px; height: 190px; border-radius: 8px;
+      background-size: cover; background-position: center;
+      transition: opacity 1s; pointer-events: none;
+    }
+  </style>
 </head>
 <body style="margin:0; background:transparent;">
   <div style="background:#f7cfe0; padding:10px; border-radius:20px;">
@@ -13,7 +21,24 @@
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"></iframe>
       <div style="position:absolute; inset:0; background:#fde3ee; mix-blend-mode:multiply; pointer-events:none;"></div>
+      <div id="okladka"></div>
     </div>
   </div>
+
+  <script>
+    var zdjecia = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
+    var czas = 8000; // zmiana co 8 sekund
+    var i = 0;
+    var el = document.getElementById("okladka");
+    el.style.backgroundImage = "url('" + zdjecia[0] + "')";
+    setInterval(function () {
+      el.style.opacity = 0;
+      setTimeout(function () {
+        i = (i + 1) % zdjecia.length;
+        el.style.backgroundImage = "url('" + zdjecia[i] + "')";
+        el.style.opacity = 1;
+      }, 1000);
+    }, czas);
+  </script>
 </body>
 </html>
