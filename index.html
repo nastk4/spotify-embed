@@ -3,60 +3,80 @@
 <head>
   <meta charset="utf-8">
   <title>Playlist</title>
-  <link rel="preload" as="image" href="foto1.jpg">
+  <link rel="preload" as="image" href="plyta.jpg">
   <style>
     html, body { margin: 0; overflow: hidden; background: transparent; }
+
+    #wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      isolation: isolate; min-height: 352px;
+    }
+    #wrap iframe {
+      display: block; border: 0;
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    /* kwadrat zasłaniający oryginalną okładkę, kolor dopasowany do tła odtwarzacza */
     #okladka {
       position: absolute; left: 24px; top: 24px;
       width: 152px; height: 152px; border-radius: 8px;
-      overflow: hidden; pointer-events: none;
-      background: #f7cfe0;
+      background: #dfc8d3;
+      pointer-events: none;
     }
-    #okladka img {
+
+    #plyta {
       position: absolute; inset: 0;
-      width: 100%; height: 100%; object-fit: cover;
+      width: 100%; height: 100%;
+      border-radius: 50%; object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      animation: obrot 5s linear infinite;
+      animation-play-state: paused;
     }
-    #b { opacity: 0; transition: opacity 1s; }
+    #plyta.gra { animation-play-state: running; }
+
+    /* dziurka w środku płyty */
+    #dziura {
+      position: absolute; left: 50%; top: 50%;
+      width: 24px; height: 24px; margin: -12px 0 0 -12px;
+      border-radius: 50%; background: #dfc8d3;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.25);
+    }
+
+    @keyframes obrot { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
   <div style="background:#f7cfe0; padding:10px; border-radius:20px;">
-    <div style="position:relative; border-radius:12px; overflow:hidden; isolation:isolate;">
-      <iframe style="display:block; border:0; filter: invert(1) hue-rotate(180deg);"
-        src="https://open.spotify.com/embed/playlist/162O07ZgoZ6xhfEstXVO4H?utm_source=generator&theme=0"
-        width="100%" height="352" frameborder="0" allowfullscreen=""
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    <div id="wrap">
+      <div id="embed"></div>
       <div style="position:absolute; inset:0; background:#fde3ee; mix-blend-mode:multiply; pointer-events:none;"></div>
       <div id="okladka">
-        <img id="a" src="foto1.jpg" alt="" fetchpriority="high">
-        <img id="b" alt="">
+        <img id="plyta" src="plyta.jpg" alt="">
+        <div id="dziura"></div>
       </div>
     </div>
   </div>
 
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
   <script>
-    var zdjecia = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
-    var czas = 8000;
-    var i = 0;
-    var a = document.getElementById("a");
-    var b = document.getElementById("b");
-
-    zdjecia.forEach(function (z) { new Image().src = z; });
-
-    if (zdjecia.length > 1) {
-      setInterval(function () {
-        var next = (i + 1) % zdjecia.length;
-        b.src = zdjecia[next];
-        b.style.opacity = 1;
-        setTimeout(function () {
-          a.src = zdjecia[next];
-          b.style.transition = "none";
-          b.style.opacity = 0;
-          setTimeout(function () { b.style.transition = "opacity 1s"; }, 50);
-          i = next;
-        }, 1000);
-      }, czas);
-    }
+    window.onSpotifyIframeApiReady = function (IFrameAPI) {
+      var element = document.getElementById("embed");
+      var options = {
+        uri: "spotify:playlist:162O07ZgoZ6xhfEstXVO4H",
+        width: "100%",
+        height: 352
+      };
+      IFrameAPI.createController(element, options, function (controller) {
+        var plyta = document.getElementById("plyta");
+        controller.addListener("playback_update", function (e) {
+          if (e.data.isPaused) {
+            plyta.classList.remove("gra");
+          } else {
+            plyta.classList.add("gra");
+          }
+        });
+      });
+    };
   </script>
 </body>
 </html>
