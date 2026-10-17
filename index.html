@@ -16,10 +16,17 @@
       filter: invert(1) grayscale(1) brightness(1.5);
     }
 
+    .pas {
+      position: absolute; left: 0; right: 0;
+      mix-blend-mode: multiply; pointer-events: none;
+    }
+    #gora  { top: 0; height: 200px; background: #f3c4d9; }
+    #lista { top: 200px; bottom: 0; background: #f8d9e6; }
+
     #okladka {
       position: absolute; left: 24px; top: 24px;
       width: 152px; height: 152px; border-radius: 8px;
-      background: #fae9f1;
+      background: #f3c4d9;
       pointer-events: none;
     }
 
@@ -40,7 +47,8 @@
   <div style="background:#fae9f1; padding:10px; border-radius:20px;">
     <div id="wrap">
       <div id="embed"></div>
-      <div style="position:absolute; inset:0; background:#fae9f1; mix-blend-mode:multiply; pointer-events:none;"></div>
+      <div id="gora" class="pas"></div>
+      <div id="lista" class="pas"></div>
       <div id="okladka">
         <img id="plyta" src="label.png" alt="">
       </div>
