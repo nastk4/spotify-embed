@@ -5,6 +5,7 @@
   <title>Playlist</title>
   <link rel="preload" as="image" href="foto1.jpg">
   <style>
+    html, body { margin: 0; overflow: hidden; background: transparent; }
     #okladka {
       position: absolute; left: 24px; top: 24px;
       width: 152px; height: 152px; border-radius: 8px;
@@ -18,7 +19,7 @@
     #b { opacity: 0; transition: opacity 1s; }
   </style>
 </head>
-<body style="margin:0; background:transparent;">
+<body>
   <div style="background:#f7cfe0; padding:10px; border-radius:20px;">
     <div style="position:relative; border-radius:12px; overflow:hidden; isolation:isolate;">
       <iframe style="display:block; border:0; filter: invert(1) hue-rotate(180deg);"
@@ -35,7 +36,7 @@
 
   <script>
     var zdjecia = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
-    var czas = 8000; // zmiana co 8 sekund
+    var czas = 8000;
     var i = 0;
     var a = document.getElementById("a");
     var b = document.getElementById("b");
